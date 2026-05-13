@@ -1,0 +1,68 @@
+#:import SpeedPanel ui.speed_panel.SpeedPanel
+#:import SearchBar ui.search_bar.SearchBar
+#:import MapWidget ui.map_widget.MapWidget
+#:import JoystickWidget ui.joystick_widget.JoystickWidget
+
+<MainScreen>:
+    orientation: 'vertical'
+    spacing: '2dp'
+    padding: '4dp'
+
+    # Search bar
+    SearchBar:
+        id: search_bar
+
+    # Map
+    MapWidget:
+        id: map_widget
+        size_hint_y: 0.50
+
+    # Speed panel
+    SpeedPanel:
+        id: speed_panel
+
+    # Bottom row: joystick + status/controls
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: '180dp'
+        spacing: '8dp'
+        padding: '4dp'
+
+        JoystickWidget:
+            id: joystick
+            size_hint_x: 0.45
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.55
+            spacing: '6dp'
+            padding: '4dp'
+
+            Label:
+                id: coord_label
+                text: '緯度：--\n經度：--'
+                font_size: '13sp'
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+
+            Label:
+                id: status_label
+                text: '狀態：未啟動'
+                font_size: '12sp'
+                color: 0.7, 0.7, 0.7, 1
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+                size_hint_y: None
+                height: '20dp'
+
+            Button:
+                id: toggle_btn
+                text: '開始模擬'
+                font_size: '15sp'
+                size_hint_y: None
+                height: '44dp'
+                background_color: 0.2, 0.7, 0.3, 1
+                on_release: app.toggle_mock()
