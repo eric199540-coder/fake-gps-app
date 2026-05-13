@@ -3,7 +3,7 @@ name: Build Android APK
 on:
   push:
     branches: [ main, master ]
-  workflow_dispatch:  # 允許手動觸發
+  workflow_dispatch:
 
 jobs:
   build:
@@ -41,26 +41,23 @@ jobs:
           pip install --upgrade pip
           pip install buildozer cython==0.29.37
 
-      - name: Accept Android SDK licenses
+      - name: Pre-create SDK license files for Buildozer SDK path
         run: |
-          mkdir -p ~/.android
-          touch ~/.android/repositories.cfg
-          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses || true
-          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager \
-            "platform-tools" \
-            "build-tools;34.0.0" \
-            "platforms;android-33" || true
-        env:
-          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+          # Buildozer downloads its own SDK to ~/.buildozer/android/platform/android-sdk
+          # We must write license files there BEFORE buildozer runs
+          mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
+          echo -e "\n24333f8a63b6825ea9c5514f83c2829b004d1fee" \
+            > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
+          echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" \
+            > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-preview-license
+          echo -e "\nd975f751698a77b662f1254ddbeed3901e976f5a" \
+            > ~/.buildozer/android/platform/android-sdk/licenses/intel-android-extra-license
 
       - name: Build APK
         run: |
           buildozer android debug 2>&1 | tee build.log
         env:
           JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
-          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
-          # Auto-accept all SDK licenses
-          ACCEPT_ANDROID_SDK_LICENSES: y
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
