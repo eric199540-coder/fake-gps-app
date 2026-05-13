@@ -6,6 +6,7 @@ package.name = fakegps
 package.domain = com.fakegps
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,java
+source.include_patterns = kivy_garden/**,icons/**
 
 version = 1.0.0
 
@@ -13,8 +14,8 @@ version = 1.0.0
 entrypoint = main.py
 
 # Requirements
-# mapview installed as pure Python via pip (no p4a recipe needed)
-requirements = python3,kivy==2.3.0,pyjnius,android,requests,kivy-garden.mapview
+# kivy-garden.mapview removed — bundled directly in source instead
+requirements = python3,kivy==2.3.0,pyjnius,android,requests
 
 # Orientation
 orientation = portrait
