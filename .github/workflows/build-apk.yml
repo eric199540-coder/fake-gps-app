@@ -59,11 +59,20 @@ jobs:
         env:
           JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
 
+      - name: Find and upload APK artifact
+        run: |
+          echo "=== Searching for APK files ==="
+          find . -name "*.apk" 2>/dev/null || echo "No APK found"
+          find ~/.buildozer -name "*.apk" 2>/dev/null || echo "No APK in buildozer dir"
+
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: fake-gps-apk
-          path: bin/*.apk
+          path: |
+            bin/*.apk
+            .buildozer/**/*.apk
+          if-no-files-found: warn
           retention-days: 30
 
       - name: Upload build log (on failure)
