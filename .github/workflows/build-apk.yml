@@ -40,6 +40,8 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install buildozer cython==0.29.37
+          # Pin p4a to a version compatible with kivy 2.3.0 + NDK 25b
+          pip install python-for-android==2024.1.21
 
       - name: Pre-create SDK license files for Buildozer SDK path
         run: |

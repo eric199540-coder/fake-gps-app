@@ -15,7 +15,7 @@ entrypoint = main.py
 
 # Requirements
 # kivy-garden.mapview removed — bundled directly in source instead
-requirements = python3,kivy==2.2.1,pyjnius,android,requests
+requirements = python3,kivy==2.3.0,pyjnius,android,requests
 
 # Orientation
 orientation = portrait
@@ -32,7 +32,10 @@ android.add_src = android/
 # Android API targets
 android.api = 33
 android.minapi = 21
-android.ndk = 23b
+android.ndk = 25b
+
+# Pin p4a to avoid NDK minimum version bump in newer p4a
+p4a.branch = v2024.01.21
 android.sdk = 33
 
 # Architecture (arm64-v8a covers most modern devices; add armeabi-v7a for older)
