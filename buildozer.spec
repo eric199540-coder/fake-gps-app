@@ -13,9 +13,8 @@ version = 1.0.0
 entrypoint = main.py
 
 # Requirements
-# kivy-garden.mapview is installed via garden after build; mapview listed here
-# for p4a recipe resolution
-requirements = python3,kivy==2.3.0,pyjnius,android,requests,mapview
+# mapview installed as pure Python via pip (no p4a recipe needed)
+requirements = python3,kivy==2.3.0,pyjnius,android,requests,kivy-garden.mapview
 
 # Orientation
 orientation = portrait
@@ -56,7 +55,7 @@ android.manifest.service = com.fakegps.MockLocationService:android:foregroundSer
 [buildozer]
 
 # Log level: 0=error, 1=info, 2=debug
-log_level = 1
+log_level = 2
 
 # Warn on root build
 warn_on_root = 1
